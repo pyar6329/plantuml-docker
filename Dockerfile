@@ -6,11 +6,12 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN set -ex && \
   apt-get update -y && \
   apt-get install -y graphviz curl && \
-  mkdir /app && \
+  mkdir /app /data && \
   curl -sJL https://sourceforge.net/projects/plantuml/files/plantuml.${PLANTUML_VERSION}.jar/download -o /app/plantuml.jar && \
   apt-get purge -y curl && \
   apt-get clean && \
   rm -rf /var/lib/apt/lists/*
 
+WORKDIR /data
 ENTRYPOINT ["java", "-jar", "/app/plantuml.jar"]
 CMD ["-h"]
